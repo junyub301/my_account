@@ -1,28 +1,32 @@
-import { css } from '@emotion/react'
-import emotionStyled from '@emotion/styled'
-import Skelton from '@shared/Skeleton'
+import Account from '@components/home/Account'
+import { CardListSkeleton } from '@components/home/CardList'
+import { CreditScoreSkeleton } from '@components/home/CreditScore'
+import { BannerSkeleton } from '@components/home/EventBanners'
+import Spacing from '@shared/Spacing'
 import dynamic from 'next/dynamic'
 
 const EventBanners = dynamic(() => import('@components/home/EventBanners'), {
   ssr: false,
-  loading: () => (
-    <Skelton width="100%" height={100} style={{ borderRadius: 8 }} />
-  ),
+  loading: () => <BannerSkeleton />,
+})
+const CreditScore = dynamic(() => import('@components/home/CreditScore'), {
+  ssr: false,
+  loading: () => <CreditScoreSkeleton />,
+})
+const CardList = dynamic(() => import('@components/home/CardList'), {
+  ssr: false,
+  loading: () => <CardListSkeleton />,
 })
 
 export default function Home() {
   return (
-    <Container>
+    <>
       <EventBanners />
-      <div>Hello</div>
-    </Container>
+      <Account />
+      <Spacing size={8} backgroundColor="gray100" />
+      <CreditScore />
+      <Spacing size={8} backgroundColor="gray100" />
+      <CardList />
+    </>
   )
 }
-
-const Container = emotionStyled.div`
-  background-color: pink;
-`
-
-const bold = css`
-  font-weight: bold;
-`
