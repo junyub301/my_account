@@ -14,13 +14,14 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
       "@shared/*": ["src/components/shared/*"],
+      "@components/*": ["src/components/*"],
       "@styles/*": ["src/styles/*"],
       "@pages/*": ["src/pages/*"],
       "@remote/*": ["src/remote/*"],
       "@constants": ["src/constants/index"],
       "@constants/*": ["src/constants/*"],
+      "@models/*": ["src/models/*"],
       "@/*": ["src/*"]
     },
     "jsxImportSource": "@emotion/react"
