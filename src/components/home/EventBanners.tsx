@@ -10,10 +10,9 @@ import Image from 'next/image'
 
 function EventBanners() {
   const { data } = useEventBanners()
-  console.log('🚀 ~ EventBanners ~ data:', data)
 
   return (
-    <div>
+    <div style={{ padding: 24 }}>
       <Swiper spaceBetween={8}>
         {data?.map((banner) => (
           <SwiperSlide key={banner.id}>
@@ -42,6 +41,14 @@ const bannerStyles = css`
   border-radius: 8px;
 `
 
+export function BannerSkeleton() {
+  return (
+    <div style={{ padding: 24 }}>
+      <Skelton width="100%" height={100} style={{ borderRadius: 8 }} />
+    </div>
+  )
+}
+
 export default withSuspense(EventBanners, {
-  fallback: <Skelton width="100%" height={100} style={{ borderRadius: 8 }} />,
+  fallback: <BannerSkeleton />,
 })
