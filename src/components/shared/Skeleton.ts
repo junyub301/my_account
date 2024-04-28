@@ -15,11 +15,11 @@ const opacity = keyframes`
     }
 `
 
-const Skelton = styled.div<{ width: number; height: number }>(
+const Skelton = styled.div<{ width: number | string; height: number | string }>(
   ({ width, height }) => ({
     width,
     height,
-    backgroundColor: colors.gray,
+    backgroundColor: colors.gray100,
     animation: `${opacity} 2s ease-in-out 0.5s infinite`,
   }),
 )
