@@ -1,6 +1,8 @@
 import { getCards } from '@remote/card'
 import Badge from '@shared/Badge'
+import Input from '@shared/Input'
 import ListRow from '@shared/ListRow'
+import Top from '@shared/Top'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -27,6 +29,10 @@ export default function CardListPage() {
   const cards = data?.pages.map(({ items }) => items).flat()
   return (
     <div>
+      <Top title="추천카드" subTitle="회워님을 위해 준비했어요" />
+      <div style={{ padding: '0 24px 12px 24px' }}>
+        <Input onFocus={() => navigate.push('/card/search')} />
+      </div>
       <InfiniteScroll
         dataLength={cards?.length || 0}
         hasMore={hasNextPage}
