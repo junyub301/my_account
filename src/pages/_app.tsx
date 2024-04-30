@@ -2,7 +2,7 @@ import Layout from '@components/shared/Layout'
 import { Global } from '@emotion/react'
 import globalStyles from '@styles/globalStyles'
 import type { AppProps } from 'next/app'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query'
 
 const client = new QueryClient()
 
@@ -11,7 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <Layout>
       <Global styles={globalStyles} />
       <QueryClientProvider client={client}>
-        <Component {...pageProps} />
+        <Hydrate state={pageProps.dehydrateState}>
+          <Component {...pageProps} />
+        </Hydrate>
       </QueryClientProvider>
     </Layout>
   )
