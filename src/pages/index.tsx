@@ -21,7 +21,6 @@ const CardList = dynamic(() => import('@components/home/CardList'), {
 
 export default function Home() {
   const { data } = useSession()
-  console.log('🚀 ~ Home ~ data:', data)
   return (
     <>
       <EventBanners />
