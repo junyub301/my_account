@@ -1,8 +1,8 @@
+import Preview from '@components/event/Preview'
 import { COLLECTIONS } from '@constants/collection'
 import { store } from '@remote/firebase'
 import Button from '@shared/Button'
 import Flex from '@shared/Flex'
-import Text from '@shared/Text'
 import TextField from '@shared/TextField'
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { useCallback, useState } from 'react'
@@ -36,7 +36,7 @@ export default function EventForm() {
   return (
     <Flex direction="column">
       <Flex>
-        <Flex direction="column" style={{ flex: 1 }}>
+        <Flex style={{ flex: 1 }} direction="column">
           <TextField
             name="title"
             label="이벤트 제목"
@@ -74,9 +74,11 @@ export default function EventForm() {
             value={formValues.endDate}
           />
         </Flex>
-        <Flex style={{ flex: 2 }}>Preview</Flex>
+        <Flex style={{ flex: 2 }}>
+          <Preview data={formValues} mode="edit" />
+        </Flex>
       </Flex>
-      <Button disabled={enabledSubmit === false} onClick={handleSubmit}>
+      <Button onClick={handleSubmit} disabled={enabledSubmit === false}>
         저장하기
       </Button>
     </Flex>
