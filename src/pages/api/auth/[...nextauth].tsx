@@ -11,8 +11,6 @@ export default NextAuth({
   ],
   callbacks: {
     session({ session, token }) {
-      console.log('🚀 ~ session ~ token:', token)
-      console.log('🚀 ~ session ~ session:', session)
       if (session.user) {
         ;(session.user as User).id = token.sub as string
       }
