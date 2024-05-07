@@ -24,6 +24,7 @@
       "@models/*": ["src/models/*"],
       "@utils/*": ["src/utils/*"],
       "@contexts/*": ["src/contexts/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@/*": ["src/*"]
     },
     "jsxImportSource": "@emotion/react"
