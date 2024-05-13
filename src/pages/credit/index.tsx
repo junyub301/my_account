@@ -1,24 +1,30 @@
-import dynamic from 'next/dynamic'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import Flex from '@shared/Flex'
-import Text from '@shared/Text'
-import Spacing from '@shared/Spacing'
-import CreditScoreChart from '@shared/CreditScoreChart'
-import ListRow from '@shared/ListRow'
-import useUser from '@hooks/useUser'
+import useCredit from '@components/credit/hooks/useCredit'
 import { useAlertContext } from '@contexts/AlertContext'
+import useUser from '@hooks/useUser'
+import { User } from '@models/user'
+import { getCredit } from '@remote/credit'
+import CreditScoreChart from '@shared/CreditScoreChart'
+import Flex from '@shared/Flex'
+import ListRow from '@shared/ListRow'
+import Spacing from '@shared/Spacing'
+import Text from '@shared/Text'
+import { GetServerSidePropsContext } from 'next'
+import { getSession } from 'next-auth/react'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useCallback } from 'react'
+import { QueryClient, dehydrate } from 'react-query'
 
 const FixedBottomButton = dynamic(() => import('@shared/FixedBottomButton'), {
   ssr: false,
 })
 
 export default function CreditPage() {
-  const isFetchCreditScore = true
   const navigate = useRouter()
   const user = useUser()
   const { open } = useAlertContext()
+
+  const { data } = useCredit()
 
   const handleCheck = useCallback(() => {
     if (user == null) {
@@ -26,7 +32,7 @@ export default function CreditPage() {
         title: '로그인이 필요한 기능이예요',
         description: '정확한 신용정보를 확인을 위해 로그인을 먼저 진행해주세요',
         onButtonClick: () => {
-          navigate.push('/auth/siginin')
+          navigate.push('/auth/signin')
         },
       })
       return
@@ -35,7 +41,7 @@ export default function CreditPage() {
     navigate.push('/credit/check')
   }, [user, navigate, open])
 
-  return isFetchCreditScore ? (
+  return data != null ? (
     <div>
       <Spacing size={40} />
       <Flex align="center" direction="column">
@@ -43,7 +49,7 @@ export default function CreditPage() {
           나의 신용점수
         </Text>
         <Spacing size={10} />
-        <CreditScoreChart score={0} />
+        <CreditScoreChart score={data.creditScore} />
       </Flex>
       <Spacing size={80} />
       <ul>
@@ -94,4 +100,22 @@ export default function CreditPage() {
       />
     </div>
   )
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getSession(context)
+  if (session != null && session.user != null) {
+    const client = new QueryClient()
+    await client.prefetchQuery(['credit', (session.user as User)?.id], () =>
+      getCredit((session.user as User)?.id),
+    )
+    return {
+      props: {
+        dehydreatedState: JSON.parse(JSON.stringify(dehydrate(client))),
+      },
+    }
+  }
+  return {
+    props: {},
+  }
 }

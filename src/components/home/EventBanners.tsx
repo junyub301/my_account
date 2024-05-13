@@ -3,10 +3,10 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import Link from 'next/link'
 import Flex from '@shared/Flex'
 import Text from '@shared/Text'
-import withSuspense from '@shared/hocs/withSuspense'
 import { css } from '@emotion/react'
 import Skelton from '@shared/Skeleton'
 import Image from 'next/image'
+import withSuspense from '@hooks/withSuspense'
 
 function EventBanners() {
   const { data } = useEventBanners()

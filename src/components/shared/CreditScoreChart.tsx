@@ -56,7 +56,7 @@ function CreditScoreChart({
         ></path>
       </svg>
       <Text typography="t6" bold css={textStyles}>
-        {addDelimiter(score)}
+        {score === 0 ? '???' : addDelimiter(score)}
       </Text>
     </Container>
   )
