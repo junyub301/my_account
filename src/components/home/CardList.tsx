@@ -1,11 +1,11 @@
 import Text from '@shared/Text'
-import withSuspense from '@shared/hocs/withSuspense'
 import useCards from './hooks/useCards'
 import ListRow from '@shared/ListRow'
 import Badge from '@shared/Badge'
 import Button from '@shared/Button'
 import Skelton from '@shared/Skeleton'
 import { useRouter } from 'next/router'
+import withSuspense from '@hooks/withSuspense'
 
 function CardList() {
   const { data } = useCards()
