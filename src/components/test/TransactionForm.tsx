@@ -11,7 +11,7 @@ import { useState } from 'react'
 export default function TransactionForm() {
   const [formValues, setFormValues] = useState({
     userId: '',
-    type: 'diposit',
+    type: 'deposit',
     amount: '',
     displayText: '',
   })
