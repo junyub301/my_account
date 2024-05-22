@@ -11,7 +11,6 @@ import useTransactions from './hooks/useTransactions'
 
 function Transactions() {
   const { data } = useTransactions({ suspense: true })
-  console.log('🚀 ~ Transactions ~ data:', data)
   const transactions = data?.pages
     .map(({ items }) => items)
     .flat()

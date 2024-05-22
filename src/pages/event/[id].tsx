@@ -16,7 +16,6 @@ export default function EventPage({ id, initialEvent }: EventPageProps) {
   const { data } = useQuery(['event', id], () => getEvent(id), {
     initialData: initialEvent,
     onSuccess: (event) => {
-      console.log('🚀 ~ const{data}=useQuery ~ event:', event)
       const isExitEvent = isAfter(new Date(), parseISO(event.endDate))
       if (isExitEvent) {
         open({
