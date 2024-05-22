@@ -41,7 +41,7 @@ export async function getTransactions({
 }
 
 function generateQuery({
-  filter,
+  filter = 'all',
   pageParam,
   userId,
 }: {
