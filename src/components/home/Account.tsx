@@ -66,10 +66,12 @@ export default function Account() {
           </Text>
           <Spacing size={2} />
           <Text typography="t3" bold>
-            {addDelimiter(account?.balnace)}원
+            {addDelimiter(account?.balance)}원
           </Text>
         </Flex>
-        <Button>분석</Button>
+        <Link href="/account">
+          <Button>분석</Button>
+        </Link>
       </Flex>
     </div>
   )
