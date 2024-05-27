@@ -1,7 +1,7 @@
 import { 약관목록 } from '@constants/account'
 import useUser from '@hooks/useUser'
 import { User } from '@models/user'
-import { getTerms } from '@remote/account'
+import { getTerms, updateTerms } from '@remote/account'
 import Button from '@shared/Button'
 import ListRow from '@shared/ListRow'
 import Text from '@shared/Text'
@@ -9,15 +9,31 @@ import Top from '@shared/Top'
 import { GetServerSidePropsContext } from 'next'
 import { getSession } from 'next-auth/react'
 import { useMemo } from 'react'
-import { dehydrate, QueryClient, useQuery } from 'react-query'
+import {
+  dehydrate,
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from 'react-query'
 
 export default function TermsPage() {
   const user = useUser()
+  const client = useQueryClient()
   const { data } = useQuery(
     ['terms', user?.id],
     () => getTerms(user?.id as string),
     {
       enabled: user != null,
+    },
+  )
+  const { mutate, isLoading } = useMutation(
+    (termIds: string[]) => updateTerms(user?.id as string, termIds),
+    {
+      onSuccess: () => {
+        client.invalidateQueries(['terms', user?.id])
+      },
+      onError: () => {},
     },
   )
 
@@ -34,6 +50,15 @@ export default function TermsPage() {
     )
     return { requiredTerms, choiceTerms }
   }, [data])
+
+  const handleDisagree = (selectedTermId: string) => {
+    const updatedTermIds = data?.termIds.filter(
+      (termId) => termId !== selectedTermId,
+    )
+    if (updatedTermIds != null) {
+      mutate(updatedTermIds)
+    }
+  }
 
   return (
     <div>
@@ -56,7 +81,14 @@ export default function TermsPage() {
               contents={
                 <ListRow.Texts title={`[선택] ${term.title}`} subTitle="" />
               }
-              right={<Button>철회</Button>}
+              right={
+                <Button
+                  disabled={isLoading}
+                  onClick={() => handleDisagree(term.id)}
+                >
+                  철회
+                </Button>
+              }
             />
           ))}
         </ul>
