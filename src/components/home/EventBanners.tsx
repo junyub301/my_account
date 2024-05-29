@@ -7,6 +7,7 @@ import { css } from '@emotion/react'
 import Skelton from '@shared/Skeleton'
 import Image from 'next/image'
 import withSuspense from '@hooks/withSuspense'
+import ErrorBoundary from '@shared/ErrorBoundary'
 
 function EventBanners() {
   const { data } = useEventBanners()
@@ -41,6 +42,16 @@ const bannerStyles = css`
   border-radius: 8px;
 `
 
+function WrapErrorBoundary() {
+  return (
+    <ErrorBoundary
+      fallbackComponent={<div>이벤트 배너에 문제가 생겼어요.</div>}
+    >
+      <EventBanners />
+    </ErrorBoundary>
+  )
+}
+
 export function BannerSkeleton() {
   return (
     <div style={{ padding: 24 }}>
@@ -49,6 +60,6 @@ export function BannerSkeleton() {
   )
 }
 
-export default withSuspense(EventBanners, {
+export default withSuspense(WrapErrorBoundary, {
   fallback: <BannerSkeleton />,
 })
