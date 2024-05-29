@@ -2,6 +2,7 @@ import { Card } from '@models/card'
 import { getCard } from '@remote/card'
 import Flex from '@shared/Flex'
 import ListRow from '@shared/ListRow'
+import SEO from '@shared/SEO'
 import Text from '@shared/Text'
 import Top from '@shared/Top'
 import { motion } from 'framer-motion'
@@ -32,6 +33,11 @@ export default function CardDetailPage({ initialCard }: CardDetailPageProps) {
 
   return (
     <div>
+      <SEO
+        title={`${corpName} ${name}`}
+        description={subTitle}
+        image="https://cdn.autotribune.co.kr/news/photo/202401/12365_60662_954.png"
+      />
       <Top title={`${corpName} ${name}`} subTitle={subTitle} />
       <ul>
         {benefit.map((text, index) => (

@@ -21,10 +21,8 @@ export default function App({
         <QueryClientProvider client={client}>
           <Hydrate state={dehydrateState}>
             <AlertContextProvider>
-              <AuthGuard>
-                <Navbar />
-                <Component {...pageProps} />
-              </AuthGuard>
+              <Navbar />
+              <Component {...pageProps} />
             </AlertContextProvider>
           </Hydrate>
         </QueryClientProvider>
