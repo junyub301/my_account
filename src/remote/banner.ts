@@ -8,6 +8,7 @@ export async function getEventBanners({ hasAccount }: { hasAccount: boolean }) {
     collection(store, COLLECTIONS.EVENT_BANNER),
     where('hasAccount', '==', hasAccount),
   )
+
   const snapshot = await getDocs(eventBannerQuery)
 
   return snapshot.docs.map((doc) => ({
